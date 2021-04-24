@@ -36,6 +36,8 @@ namespace HerokuApiDemo
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "HerokuApiDemo", Version = "v1" });
             });
+
+            services.AddCors();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -49,6 +51,12 @@ namespace HerokuApiDemo
             }
 
             app.UseHttpsRedirection();
+
+            app.UseCors(x => x
+                    .AllowAnyMethod()
+                    .AllowAnyHeader()
+                    .SetIsOriginAllowed(origin => true)
+                    .AllowCredentials());
 
             app.UseRouting();
 
